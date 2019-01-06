@@ -96,7 +96,6 @@ crossIndexFromBoard board (x,y) = crossLetterOnBoard board x y
 
 crossLetterOnBoard :: [[Char]] -> Int -> Int -> [[Char]]
 crossLetterOnBoard [] _ _ = []
-<<<<<<< HEAD
 crossLetterOnBoard (line:lines) colNr lineNr | lineNr==0 = (crossLetterFromLine line colNr):(crossLetterOnBoard lines colNr (lineNr-1))
                                     | otherwise = (line:(crossLetterOnBoard lines colNr (lineNr-1)))
 
