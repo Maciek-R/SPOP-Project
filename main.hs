@@ -1,4 +1,5 @@
 import System.IO
+import System.Exit
 import qualified Data.Set as Set
 import qualified Data.List as List
 
@@ -6,16 +7,27 @@ main =  do
         putStrLn "1. Puzzle1"
         putStrLn "2. Puzzle2"
         putStrLn "3. Puzzle3"
+        putStrLn "0. Wyjscie"
         putStrLn "Wybierz zagadke: "
         nr <- getLine
-        boardIO <- readFile (boardFileName nr) 
-        wordsIO <- readFile (wordsFileName nr) 
-        --checking files TODO
-        let the_board = lines boardIO
-        let the_words = lines wordsIO
-        printWords the_words
-        putStrLn $ " "
-        printBoards the_board (crossIndicesFromBoard the_board (findIndicesToCross the_words the_board))
+        if nr == "0" 
+            then return ()
+        else if not (nr == "1" || nr == "2" || nr == "3")
+            then main
+        else 
+            mainPuzzle nr
+        
+        
+        
+mainPuzzle nr = do
+                boardIO <- readFile (boardFileName nr) 
+                wordsIO <- readFile (wordsFileName nr) 
+                --checking files TODO
+                let the_board = lines boardIO
+                let the_words = lines wordsIO
+                printWords the_words
+                putStrLn $ " "
+                printBoards the_board (crossIndicesFromBoard the_board (findIndicesToCross the_words the_board))
 
 printWords [] = return ()
 printWords (x:xs) = do
@@ -84,6 +96,7 @@ crossIndexFromBoard board (x,y) = crossLetterOnBoard board x y
 
 crossLetterOnBoard :: [[Char]] -> Int -> Int -> [[Char]]
 crossLetterOnBoard [] _ _ = []
+<<<<<<< HEAD
 crossLetterOnBoard (line:lines) colNr lineNr | lineNr==0 = (crossLetterFromLine line colNr):(crossLetterOnBoard lines colNr (lineNr-1))
                                     | otherwise = (line:(crossLetterOnBoard lines colNr (lineNr-1)))
 
